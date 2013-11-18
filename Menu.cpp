@@ -23,21 +23,10 @@ Menu::Menu(sf::RenderWindow &p_window, Button &p_playButton, Button &p_exitButto
 	m_window(&p_window),
 	m_playButton(p_playButton),
 	m_exitButton(p_exitButton),
-	m_backgroundObstacles(),
-	m_backgroundDim(),
-	m_minBalls(p_minBalls),
-	m_maxBalls(p_maxBalls),
-	m_avgBalls((p_minBalls + p_maxBalls) / 2),
-	m_ballRadius(p_ballRadius),
+	
 	m_logo(p_logoTexture)
 {
-	for(int i = 0; i < m_avgBalls; i++)
-	{
-		sf::Vector2f randomStart = seedStartingRandomBallPosition();
-		int hue = rand() % 359;
-		int vel = ((rand() % 3) + 1); //This is where the velocity is calc'd
-		m_backgroundObstacles.Append(Ball(randomStart, sf::Vector2f(vel*-1, vel), ColorUtil::HueToRGB(hue), hue));
-	}
+	
 
 	m_backgroundDim.setSize(sf::Vector2f(m_window->getSize().x, m_window->getSize().y));
 	m_backgroundDim.setFillColor(sf::Color(0, 0, 0, p_backgroundDimAlpha));
@@ -63,9 +52,7 @@ bool Menu::run()
 		{
 			if(m_window->isOpen())
 			{
-				spawnNewBalls();
-				moveBalls();
-				checkBallsLeavingScreen();
+				
 				render();
 			}
 		}
@@ -136,8 +123,7 @@ int Menu::handleEvents()
 void Menu::render()
 {
 	m_window->clear();
-	for(DListIterator<Ball> i = m_backgroundObstacles.GetIterator(); i.Valid(); i.Forth())
-		m_window->draw(i.Item().getCircle());
+	
 	m_window->draw(m_backgroundDim);
 	m_window->draw(m_playButton.getSprite());
 	m_window->draw(m_exitButton.getSprite());
@@ -151,19 +137,6 @@ void Menu::render()
 	Args:	None
 	Rtrn:	None
 */
-void Menu::spawnNewBalls()
-{
-	int random = rand() % m_maxBalls - m_minBalls;
-	int comparison = m_backgroundObstacles.GetCount() - m_minBalls;
-
-	if(random >= comparison && comparison != 10)
-	{
-		sf::Vector2f pos = seedRandomBallPosition();
-		int hue = rand() % 359;
-		int vel = ((rand() % 3) + 2);
-		m_backgroundObstacles.Append(Ball(pos, sf::Vector2f(vel*-1, vel), ColorUtil::HueToRGB(hue), hue));
-	}
-}
 
 /*
 	Name:	moveBalls
@@ -171,11 +144,7 @@ void Menu::spawnNewBalls()
 	Args:	None
 	Rtrn:	None
 */
-void Menu::moveBalls()
-{
-	for(DListIterator<Ball> i = m_backgroundObstacles.GetIterator(); i.Valid(); i.Forth())
-		i.Item().move();
-}
+
 
 /*
 	Name:	checkBallsLeavingScreen
@@ -183,16 +152,7 @@ void Menu::moveBalls()
 	Args:	None
 	Rtrn:	None
 */
-void Menu::checkBallsLeavingScreen()
-{
-	for(DListIterator<Ball> i = m_backgroundObstacles.GetIterator(); i.Valid(); i.Forth())
-	{
-		if(i.Item().getPosition().x < 0 - m_ballRadius || i.Item().getPosition().y > m_window->getSize().y + m_ballRadius)
-		{
-			m_backgroundObstacles.Remove(i);
-		}
-	}
-}
+
 
 /*
 	Name:	seedStartingRandomBallPosition
@@ -200,13 +160,7 @@ void Menu::checkBallsLeavingScreen()
 	Args:	None
 	Rtrn:	Vector2f, the new position
 */
-sf::Vector2f Menu::seedStartingRandomBallPosition()
-{
-	sf::Vector2f seed;
-	seed.x = rand() % m_window->getSize().x; // + 1  ??
-	seed.y = rand() % m_window->getSize().y;
-	return seed;
-}
+
 
 /*
 	Name:	seedRandomBallPositon
@@ -214,27 +168,4 @@ sf::Vector2f Menu::seedStartingRandomBallPosition()
 	Args:	None
 	Rtrn:	Vector2f, the new position
 */
-sf::Vector2f Menu::seedRandomBallPosition()
-{
-	sf::Vector2f seed;
 
-	bool xaxis;
-	int random = rand() % 2;
-	if(random == 1)
-		xaxis = true;
-	else
-		xaxis = false;
-
-	if(xaxis)
-	{
-		seed.x = rand() % m_window->getSize().x + 1;
-		seed.y = 0 - m_ballRadius;
-	}
-	else
-	{
-		seed.x = m_window->getSize().x + m_ballRadius;
-		seed.y = rand() % m_window->getSize().y + 1;
-	}
-
-	return seed;
-}

@@ -14,16 +14,16 @@
 int main()
 {
 	srand(time(0));
-	ResourceHolder<sf::Font, Fonts::ID> fonts;
+	//ResourceHolder<sf::Font, Fonts::ID> fonts;
 	ResourceHolder<sf::Texture, Textures::ID> textures;
-	ResourceHolder<sf::SoundBuffer, Sounds::ID> sounds;
+	//ResourceHolder<sf::SoundBuffer, Sounds::ID> sounds;
 	try
 	{
-		fonts.load(Fonts::WhiteRabbit, "Assets/whiterabbit.ttf");
+		//fonts.load(Fonts::WhiteRabbit, "Assets/whiterabbit.ttf");
 		textures.load(Textures::Buttons, "Assets/buttons.png");
 		textures.load(Textures::Timtam, "Assets/timtam.png");
-		sounds.load(Sounds::GlassBreak, "Assets/glassbreak.ogg");
-		sounds.load(Sounds::Boop, "Assets/boop.ogg");
+		//sounds.load(Sounds::GlassBreak, "Assets/glassbreak.ogg");
+		//sounds.load(Sounds::Boop, "Assets/boop.ogg");
 	}
 	catch(std::runtime_error &e)
 	{
@@ -33,6 +33,7 @@ int main()
 
 	Window mainWindow(sf::Vector2f(800, 600), "Soft Eng Game");
 
+	
 	Button mainPlayButton(textures.get(Textures::Buttons), sf::Vector2f(250,  75), sf::Vector2f(25, 500),
 		sf::IntRect(0, 0, 250, 75), sf::IntRect(0, 75, 250,  75));
 	Button mainQuitButton(textures.get(Textures::Buttons), sf::Vector2f(250,  75), sf::Vector2f(525, 500),
@@ -50,14 +51,14 @@ int main()
 	
 	Menu startMenu(mainWindow.getWindow(), mainPlayButton, mainQuitButton, 10, 20, 15, 45, textures.get(Textures::Timtam),
 		sf::Vector2f(75, 200));
+		
 
 	bool play = startMenu.run();
 	
+	
 	while(play)
 	{
-		Game game(mainWindow.getWindow(), 15, 10, 120, 25, 15, fonts.get(Fonts::WhiteRabbit), sf::Vector2f(30, 20),
-			32, sf::Color::White, 180, "Assets/background.ogg", 40, 1000, 60, pauseContButton, pauseQuitButton,
-			endRetryButton, endQuitButton, 150, sounds.get(Sounds::GlassBreak), sounds.get(Sounds::Boop));
+		Game game(&mainWindow.getWindow());
 		play = game.run();
 	}
 

@@ -14,8 +14,7 @@ Player::Player(sf::Vector2f p_pos, const sf::Color &p_color) :
 	m_circle(15, 40),
 	m_points(0),
 	m_multiplier(1),
-	m_lastPos(),
-	m_particleSys(p_color, sf::Vector2f(p_pos), sf::Vector2f(-3, 3), 30, m_circle.getRadius(), 1000)
+	m_lastPos()
 {
 	m_circle.setPosition(p_pos);
 	m_circle.setFillColor(p_color);
@@ -81,9 +80,4 @@ void Player::resetPoints()
 int Player::getPoints()
 {
 	return m_points;
-}
-
-ParticleSys& Player::getParticleSys()
-{
-	return m_particleSys;
 }
