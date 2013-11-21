@@ -65,3 +65,13 @@ std::string Util::toString(int p_int)
 	os << p_int;
 	return os.str();
 }
+
+std::string Util::format(std::string p_input, int p_widthInChars)
+{
+	for(int i = 0; i < p_input.size() / p_widthInChars; i++)
+	{
+		p_input.insert(p_widthInChars + p_widthInChars * i, "-\n");
+	}
+	
+	return p_input;
+}

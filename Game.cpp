@@ -20,11 +20,11 @@ Game::Game(sf::RenderWindow* p_window, Quiz p_quiz, std::vector<QuestionButton> 
 	updateQuestionNumberText();
 
 	m_currentQuestion = m_quiz.popQuestion();
-	m_questionButtons[0].setText(m_currentQuestion.getQuestion());
-	m_questionButtons[1].setText(m_currentQuestion.getAnswer());
-	m_questionButtons[2].setText(m_currentQuestion.getWrongAnswers()[0]);
-	m_questionButtons[3].setText(m_currentQuestion.getWrongAnswers()[1]);
-	m_questionButtons[4].setText(m_currentQuestion.getWrongAnswers()[2]);
+	m_questionButtons[0].setText(Util::format(m_currentQuestion.getQuestion(), GameData::questionBoxCharLim ));
+	m_questionButtons[1].setText(Util::format(m_currentQuestion.getAnswer(),GameData::answerBoxCharLim));
+	m_questionButtons[2].setText(Util::format(m_currentQuestion.getWrongAnswers()[0], GameData::answerBoxCharLim));
+	m_questionButtons[3].setText(Util::format(m_currentQuestion.getWrongAnswers()[1], GameData::answerBoxCharLim));
+	m_questionButtons[4].setText(Util::format(m_currentQuestion.getWrongAnswers()[2], GameData::answerBoxCharLim));
 }
 
 std::vector<AnswerCombo> Game::run()
@@ -156,11 +156,11 @@ void Game::nextQuestion(bool p_correct, std::string p_question, std::string p_an
 
 void Game::updateButtons()
 {
-	m_questionButtons[0].setText(m_currentQuestion.getQuestion());
-	m_questionButtons[1].setText(m_currentQuestion.getAnswer());
-	m_questionButtons[2].setText(m_currentQuestion.getWrongAnswers()[0]);
-	m_questionButtons[3].setText(m_currentQuestion.getWrongAnswers()[1]);
-	m_questionButtons[4].setText(m_currentQuestion.getWrongAnswers()[2]);
+	m_questionButtons[0].setText(Util::format(m_currentQuestion.getQuestion(), GameData::questionBoxCharLim));
+	m_questionButtons[1].setText(Util::format(m_currentQuestion.getAnswer(), GameData::answerBoxCharLim));
+	m_questionButtons[2].setText(Util::format(m_currentQuestion.getWrongAnswers()[0], GameData::answerBoxCharLim));
+	m_questionButtons[3].setText(Util::format(m_currentQuestion.getWrongAnswers()[1], GameData::answerBoxCharLim));
+	m_questionButtons[4].setText(Util::format(m_currentQuestion.getWrongAnswers()[2], GameData::answerBoxCharLim));
 }
 
 void Game::updateQuestionNumberText()
