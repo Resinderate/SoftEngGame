@@ -16,3 +16,8 @@ void Quiz::pushAnswer(AnswerCombo p_answerCombo)
 {
 	m_answers.push_back(p_answerCombo);
 }
+
+int Quiz::questionCountRemaining()
+{
+	return m_questions.size();
+}

@@ -15,5 +15,6 @@ public:
 	Quiz(std::vector<Question> p_questions, int p_secondsToAnswer);
 	Question popQuestion();
 	void pushAnswer(AnswerCombo p_answerCombo);
+	int questionCountRemaining();
 };
 #endif

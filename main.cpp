@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include "Button.h"
 #include "Question.h"
+#include "Util.h"
 
 #include <iostream>
 
@@ -50,20 +51,14 @@ int main()
 	
 	//quiz reader, gets a list of quizes from a dir and displays them.
 	//pick one and return with that number.
+	
+	//pick a filename / quiz file.
+	std::string quizFile = "Quizes\\quiz1.txt";
 
 	//use the quiz at that index.
 
 	//get the list of Q's
-	std::vector<Question> qs;
-	qs.push_back(Question("Q", "A", "A", "A", "A"));
-	qs.push_back(Question("Q", "A", "A", "A", "A"));
-	qs.push_back(Question("Q", "A", "A", "A", "A"));
-	qs.push_back(Question("Q", "A", "A", "A", "A"));
-	qs.push_back(Question("Q", "A", "A", "A", "A"));
-	qs.push_back(Question("Q", "A", "A", "A", "A"));
-
-	//need to get a time to answer somehow.
-	Quiz quiz(qs, 10);
+	Quiz quiz = Util::getQuiz(quizFile, 15);
 
 	std::vector<QuestionButton> questionButtons;
 	questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(640, 120), sf::Vector2f(80, 210), sf::Color::Blue, sf::Color::Red));
@@ -72,14 +67,21 @@ int main()
 	questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(420, 340), sf::Color::Blue, sf::Color::Red));
 	questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(420, 470), sf::Color::Blue, sf::Color::Red));
 	
-	while(play)
-	{
+	std::vector<AnswerCombo> answers;
+
+	//while(play)
+	//{
 		Game game(&mainWindow.getWindow(), quiz, questionButtons, 
 			sf::Sprite(textures.get(Textures::Timtam), 
 			sf::IntRect(0, 0, textures.get(Textures::Timtam).getSize().x, textures.get(Textures::Timtam).getSize().y)),
-			sf::Vector2f(0,0));
-		play = game.run();
-	}
+			fonts.get(Fonts::WhiteRabbit),
+			32,
+			sf::Color::White);
+		answers = game.run();
+
+		//takes in answers.
+		//EndMenu end();
+	//}
 
 	return 0;
 }

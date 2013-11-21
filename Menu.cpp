@@ -91,7 +91,7 @@ int Menu::handleEvents()
 				m_exitButton.endHover();
 		}
 
-		if(event.type == sf::Event::MouseButtonPressed)
+		if(event.type == sf::Event::MouseButtonReleased)
 		{
 			if(event.mouseButton.button == sf::Mouse::Left)
 			{
