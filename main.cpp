@@ -10,6 +10,7 @@
 #include "Button.h"
 #include "Question.h"
 #include "Util.h"
+#include "QuizMenu.h"
 
 #include <iostream>
 
@@ -39,6 +40,27 @@ int main()
 	Button mainQuitButton(textures.get(Textures::Buttons), sf::Vector2f(250,  75), sf::Vector2f(525, 500),
 		sf::IntRect(0, 150, 250, 75), sf::IntRect(0, 225, 250,  75));
 
+	//QuizSelect stuff
+	Button quizMenuContinue(textures.get(Textures::Buttons), sf::Vector2f(250, 75), sf::Vector2f(250, 500),
+		sf::IntRect(0, 300, 250, 75), sf::IntRect(0, 375, 250, 75));
+
+	sf::Text selectQuiz("Select Quiz", fonts.get(Fonts::WhiteRabbit), 24);
+	selectQuiz.setPosition(150, 150);
+	sf::Text selectTime("Select Time", fonts.get(Fonts::WhiteRabbit), 24);
+	selectTime.setPosition(500, 150);
+
+	std::vector<QuestionButton> quizButtons;
+	std::vector<std::string> quizFilenames;
+	Util::getFilenamesInDir(quizFilenames, "Quizes");
+	for(int i = 0; i < quizFilenames.size(); i++)
+	{
+		quizButtons.push_back(QuestionButton(quizFilenames[i], fonts.get(Fonts::WhiteRabbit), 24, sf::Vector2f(200, 100), sf::Vector2f(100, 200 +( i * 100)), sf::Color::Blue, sf::Color::Red));
+	}
+
+	std::vector<QuestionButton> timerButtons;
+	timerButtons.push_back(QuestionButton("15", fonts.get(Fonts::WhiteRabbit), 48, sf::Vector2f(200, 100), sf::Vector2f(500, 200), sf::Color::Blue, sf::Color::Red));
+	timerButtons.push_back(QuestionButton("25", fonts.get(Fonts::WhiteRabbit), 48, sf::Vector2f(200, 100), sf::Vector2f(500, 300), sf::Color::Blue, sf::Color::Red));
+	timerButtons.push_back(QuestionButton("35", fonts.get(Fonts::WhiteRabbit), 48, sf::Vector2f(200, 100), sf::Vector2f(500, 400), sf::Color::Blue, sf::Color::Red));
 	
 
 
@@ -49,28 +71,36 @@ int main()
 
 	bool play = startMenu.run();
 	
-	//quiz reader, gets a list of quizes from a dir and displays them.
-	//pick one and return with that number.
-	
-	//pick a filename / quiz file.
-	std::string quizFile = "Quizes\\quiz1.txt";
+	if(play == 1)
+	{
+		//quiz reader, gets a list of quizes from a dir and displays them.
+		//pick one and return with that number.
 
-	//use the quiz at that index.
+		//pick a filename / quiz file.
+		std::string quizFile;
 
-	//get the list of Q's
-	Quiz quiz = Util::getQuiz(quizFile, 15);
+		//QUIZ CHOICE AND TIMER MENU
+		QuizMenu quizMenu(mainWindow.getWindow(), quizMenuContinue, selectQuiz, selectTime, quizButtons, timerButtons, 
+			textures.get(Textures::Timtam), sf::Vector2f(100, 0));
 
-	std::vector<QuestionButton> questionButtons;
-	questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(640, 120), sf::Vector2f(80, 210), sf::Color::Blue, sf::Color::Red));
-	questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(80, 340), sf::Color::Blue, sf::Color::Red));
-	questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(80, 470), sf::Color::Blue, sf::Color::Red));
-	questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(420, 340), sf::Color::Blue, sf::Color::Red));
-	questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(420, 470), sf::Color::Blue, sf::Color::Red));
-	
-	std::vector<AnswerCombo> answers;
+		int timeToAns = 0;
+		timeToAns = quizMenu.run(quizFile);
+		//use the quiz at that index.
 
-	//while(play)
-	//{
+		//get the list of Q's
+		Quiz quiz = Util::getQuiz("Quizes/" + quizFile, timeToAns);
+
+		std::vector<QuestionButton> questionButtons;
+		questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(640, 120), sf::Vector2f(80, 210), sf::Color::Blue, sf::Color::Red));
+		questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(80, 340), sf::Color::Blue, sf::Color::Red));
+		questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(80, 470), sf::Color::Blue, sf::Color::Red));
+		questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(420, 340), sf::Color::Blue, sf::Color::Red));
+		questionButtons.push_back(QuestionButton("", fonts.get(Fonts::WhiteRabbit), 18, sf::Vector2f(300, 120), sf::Vector2f(420, 470), sf::Color::Blue, sf::Color::Red));
+
+		std::vector<AnswerCombo> answers;
+
+		//while(play)
+		//{
 		Game game(&mainWindow.getWindow(), quiz, questionButtons, 
 			sf::Sprite(textures.get(Textures::Timtam), 
 			sf::IntRect(0, 0, textures.get(Textures::Timtam).getSize().x, textures.get(Textures::Timtam).getSize().y)),
@@ -81,7 +111,8 @@ int main()
 
 		//takes in answers.
 		//EndMenu end();
-	//}
+		//}
+	}
 
 	return 0;
 }

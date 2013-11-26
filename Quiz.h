@@ -16,5 +16,6 @@ public:
 	Question popQuestion();
 	void pushAnswer(AnswerCombo p_answerCombo);
 	int questionCountRemaining();
+	int secondsToAnswer();
 };
 #endif

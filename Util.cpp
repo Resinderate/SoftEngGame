@@ -10,7 +10,10 @@ void Util::getFilenamesInDir(std::vector<std::string> &out, const std::string &d
 		/* add all files to vector */
 		while ((ent = readdir (dir)) != NULL) 
 		{
-			out.push_back(ent->d_name);
+			if(ent->d_type != DT_DIR)
+			{
+				out.push_back(ent->d_name);
+			}
 		}
 		closedir (dir);
 	} 
@@ -68,10 +71,14 @@ std::string Util::toString(int p_int)
 
 std::string Util::format(std::string p_input, int p_widthInChars)
 {
-	for(int i = 0; i < p_input.size() / p_widthInChars; i++)
+	if(p_input.size() != 0)
 	{
-		p_input.insert(p_widthInChars + p_widthInChars * i, "-\n");
+		for(int i = 0; i < p_input.size() / p_widthInChars; i++)
+		{
+			p_input.insert(p_widthInChars + p_widthInChars * i, "-\n");
+		}
+
+		return p_input;
 	}
-	
 	return p_input;
 }

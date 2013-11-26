@@ -58,7 +58,7 @@ bool Menu::run()
 		}
 		else if(choice == 1)
 			return true;
-		else
+		else //choice == 2
 			return false;
 	}
 }

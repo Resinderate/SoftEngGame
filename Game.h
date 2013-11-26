@@ -18,13 +18,15 @@ private:
 	bool m_retry;
 	Quiz m_quiz;
 	std::vector<AnswerCombo> m_answers;
-	sf::Time m_questionTimer;
+	sf::Clock m_questionTimer;
 	Question m_currentQuestion;
 	std::vector<QuestionButton> m_questionButtons;
 	sf::Sprite m_logo;
 	int m_currentQuestionCounter;
 	int m_totalQuestionsCounter;
 	sf::Text m_currentQuestionNumberText;
+	sf::Text m_timeLeftToAnswerText;
+	int m_maxTimePerQuestion;
 
 	void update();
 	void render();
@@ -39,6 +41,9 @@ private:
 	void updateButtons();
 	void updateQuestionNumberText();
 	void drawCurrentQuestionNumber();
+	void checkQuestionTimeLimit();
+	void updateTimeLeftToAnswerText();
+	void drawTimeLeftToAnswer();
 public:
 	Game(sf::RenderWindow* p_window, Quiz p_quiz, std::vector<QuestionButton> p_questionButtons, sf::Sprite p_logo, const sf::Font &p_font, int p_fontSize, const sf::Color &p_color);
 	std::vector<AnswerCombo> run();

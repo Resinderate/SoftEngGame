@@ -21,3 +21,8 @@ int Quiz::questionCountRemaining()
 {
 	return m_questions.size();
 }
+
+int Quiz::secondsToAnswer()
+{
+	return m_secondsToAnswer;
+}

@@ -7,9 +7,7 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "DLinkedList.h"
 #include "Button.h"
-#include "ColorUtil.h"
 
 class Menu
 {

@@ -10,7 +10,9 @@ Game::Game(sf::RenderWindow* p_window, Quiz p_quiz, std::vector<QuestionButton> 
 	m_answers(),
 	m_currentQuestionCounter(1),
 	m_totalQuestionsCounter(p_quiz.questionCountRemaining()),
-	m_currentQuestionNumberText("", p_font, p_fontSize)
+	m_currentQuestionNumberText("", p_font, p_fontSize),
+	m_timeLeftToAnswerText("", p_font, p_fontSize),
+	m_maxTimePerQuestion(p_quiz.secondsToAnswer())
 {
 	m_logo.setOrigin(m_logo.getLocalBounds().width / 2, 0);
 	m_logo.setPosition(m_window->getSize().x / 2, 0);
@@ -18,6 +20,10 @@ Game::Game(sf::RenderWindow* p_window, Quiz p_quiz, std::vector<QuestionButton> 
 	m_currentQuestionNumberText.setPosition(20, 120);
 	m_currentQuestionNumberText.setColor(p_color);
 	updateQuestionNumberText();
+
+	m_timeLeftToAnswerText.setPosition(600, 120);
+	m_timeLeftToAnswerText.setColor(p_color);
+	updateTimeLeftToAnswerText();
 
 	m_currentQuestion = m_quiz.popQuestion();
 	m_questionButtons[0].setText(Util::format(m_currentQuestion.getQuestion(), GameData::questionBoxCharLim ));
@@ -29,6 +35,7 @@ Game::Game(sf::RenderWindow* p_window, Quiz p_quiz, std::vector<QuestionButton> 
 
 std::vector<AnswerCombo> Game::run()
 {
+	m_questionTimer.restart();
 	while(m_stillPlaying && m_window->isOpen())
 	{
 		handleEvents();
@@ -46,12 +53,14 @@ void Game::render()
 	drawButtonText();
 	drawHeader();
 	drawCurrentQuestionNumber();
+	drawTimeLeftToAnswer();
 	m_window->display();
 }
 
 void Game::update()
 {
-	
+	checkQuestionTimeLimit();
+	updateTimeLeftToAnswerText();
 }
 
 void Game::handleEvents()
@@ -138,6 +147,11 @@ void Game::drawCurrentQuestionNumber()
 	m_window->draw(m_currentQuestionNumberText);
 }
 
+void Game::drawTimeLeftToAnswer()
+{
+	m_window->draw(m_timeLeftToAnswerText);
+}
+
 void Game::nextQuestion(bool p_correct, std::string p_question, std::string p_answer, std::string p_guess)
 {
 	if(m_currentQuestionCounter < m_totalQuestionsCounter) //1 off
@@ -147,6 +161,7 @@ void Game::nextQuestion(bool p_correct, std::string p_question, std::string p_an
 		m_currentQuestionCounter++;
 		updateButtons();
 		updateQuestionNumberText();
+		m_questionTimer.restart();
 	}
 	else
 	{
@@ -166,4 +181,18 @@ void Game::updateButtons()
 void Game::updateQuestionNumberText()
 {
 	m_currentQuestionNumberText.setString(Util::toString(m_currentQuestionCounter) + " / " + Util::toString(m_totalQuestionsCounter));
+}
+
+void Game::checkQuestionTimeLimit()
+{
+	if(m_questionTimer.getElapsedTime().asSeconds() > m_maxTimePerQuestion)
+	{
+		nextQuestion(false, m_currentQuestion.getQuestion(), m_currentQuestion.getAnswer(), "Not Answered!");
+		m_questionTimer.restart();
+	}
+}
+
+void Game::updateTimeLeftToAnswerText()
+{
+	m_timeLeftToAnswerText.setString(Util::toString(m_maxTimePerQuestion - m_questionTimer.getElapsedTime().asSeconds()) + "s");
 }

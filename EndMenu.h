@@ -3,11 +3,10 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "DLinkedList.h"
 #include "Button.h"
 #include "QuestionButton.h"
 
-class Menu
+class EndMenu
 {
 private:
 	Button				m_retryButton;
@@ -21,8 +20,8 @@ private:
 	void			render();
 
 public:
-	Menu(sf::RenderWindow &p_window, Button &p_retryButton, Button &p_quitButton, 
+	EndMenu(sf::RenderWindow &p_window, Button &p_retryButton, Button &p_quitButton, 
 		const sf::Texture &p_logoTexture, const sf::Vector2f &p_logoPos);
-	bool run();
+	int run();
 };
 #endif
