@@ -122,50 +122,11 @@ int Menu::handleEvents()
 */
 void Menu::render()
 {
-	m_window->clear();
+	m_window->clear(sf::Color::White);
 	
-	m_window->draw(m_backgroundDim);
+	//m_window->draw(m_backgroundDim);
 	m_window->draw(m_playButton.getSprite());
 	m_window->draw(m_exitButton.getSprite());
 	m_window->draw(m_logo);
 	m_window->display();
 }
-
-/*
-	Name:	spawnNewBalls
-	Desc:	spawns new balls to the screen, for the graphic in the background.
-	Args:	None
-	Rtrn:	None
-*/
-
-/*
-	Name:	moveBalls
-	Desc:	moves all the balls in the background, based on their movement vector.
-	Args:	None
-	Rtrn:	None
-*/
-
-
-/*
-	Name:	checkBallsLeavingScreen
-	Desc:	checks to see if any balls have left the screen, and if they have it removes them
-	Args:	None
-	Rtrn:	None
-*/
-
-
-/*
-	Name:	seedStartingRandomBallPosition
-	Desc:	gives a random position of a ball for the start of the background
-	Args:	None
-	Rtrn:	Vector2f, the new position
-*/
-
-
-/*
-	Name:	seedRandomBallPositon
-	Desc:	gives a random position of a ball to be spawned
-	Args:	None
-	Rtrn:	Vector2f, the new position
-*/
-

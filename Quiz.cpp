@@ -4,7 +4,7 @@ Quiz::Quiz(std::vector<Question> p_questions, int p_secondsToAnswer) :
 	m_questions(p_questions),
 	m_secondsToAnswer(p_secondsToAnswer)
 {
-
+	shuffleQuestions();
 }
 Question Quiz::popQuestion()
 {
@@ -25,4 +25,9 @@ int Quiz::questionCountRemaining()
 int Quiz::secondsToAnswer()
 {
 	return m_secondsToAnswer;
+}
+
+void Quiz::shuffleQuestions()
+{
+	std::random_shuffle(m_questions.begin(), m_questions.end());
 }

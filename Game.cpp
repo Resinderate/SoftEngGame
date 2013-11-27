@@ -21,7 +21,7 @@ Game::Game(sf::RenderWindow* p_window, Quiz p_quiz, std::vector<QuestionButton> 
 	m_currentQuestionNumberText.setColor(p_color);
 	updateQuestionNumberText();
 
-	m_timeLeftToAnswerText.setPosition(600, 120);
+	m_timeLeftToAnswerText.setPosition(700, 120);
 	m_timeLeftToAnswerText.setColor(p_color);
 	updateTimeLeftToAnswerText();
 
@@ -48,7 +48,7 @@ std::vector<AnswerCombo> Game::run()
 
 void Game::render()
 {
-	m_window->clear(sf::Color::Black);
+	m_window->clear(sf::Color::White);
 	drawButtons();
 	drawButtonText();
 	drawHeader();
@@ -90,7 +90,7 @@ void Game::handleEvents()
 		{
 			if(event.mouseButton.button == sf::Mouse::Left)
 			{
-				for(int i = 0; i < m_questionButtons.size(); i++)
+				for(int i = 1; i < m_questionButtons.size(); i++)
 				{
 					if(m_questionButtons[i].getShape().getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
 					{
@@ -156,7 +156,7 @@ void Game::nextQuestion(bool p_correct, std::string p_question, std::string p_an
 {
 	if(m_currentQuestionCounter < m_totalQuestionsCounter) //1 off
 	{
-		m_answers.push_back(AnswerCombo(p_correct, p_question, p_answer, p_guess));
+		m_answers.push_back(AnswerCombo(p_correct, p_question, p_answer, Util::removeFormat(p_guess)));
 		m_currentQuestion = m_quiz.popQuestion();
 		m_currentQuestionCounter++;
 		updateButtons();
@@ -165,6 +165,7 @@ void Game::nextQuestion(bool p_correct, std::string p_question, std::string p_an
 	}
 	else
 	{
+		m_answers.push_back(AnswerCombo(p_correct, p_question, p_answer, Util::removeFormat(p_guess)));
 		m_stillPlaying = false;
 	}
 }
@@ -172,6 +173,7 @@ void Game::nextQuestion(bool p_correct, std::string p_question, std::string p_an
 void Game::updateButtons()
 {
 	m_questionButtons[0].setText(Util::format(m_currentQuestion.getQuestion(), GameData::questionBoxCharLim));
+	//randomize this order
 	m_questionButtons[1].setText(Util::format(m_currentQuestion.getAnswer(), GameData::answerBoxCharLim));
 	m_questionButtons[2].setText(Util::format(m_currentQuestion.getWrongAnswers()[0], GameData::answerBoxCharLim));
 	m_questionButtons[3].setText(Util::format(m_currentQuestion.getWrongAnswers()[1], GameData::answerBoxCharLim));

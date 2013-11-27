@@ -29,3 +29,8 @@ std::string AnswerCombo::getAnswer()
 {
 	return m_answer;
 }
+
+std::string AnswerCombo::getQuestion()
+{
+	return m_question;
+}

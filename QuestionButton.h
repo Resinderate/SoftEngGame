@@ -23,7 +23,7 @@ public:
 	void				endHover();
 	sf::RectangleShape& getShape();
 	void				startHover();
-	void				setText(const std::string &p_text);
+	void				setText(std::string p_text);
 	std::string			getString();
 	sf::Text			getText();
 };

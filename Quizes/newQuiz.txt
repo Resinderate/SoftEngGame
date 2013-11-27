@@ -1,5 +1,5 @@
 ## Number of Questions ##
-8
+6
 ## Q  --  A / G / G / G
 What does CMC stand for?
 Computer-mediated communication
@@ -31,21 +31,10 @@ Use of e-mail
 Originality of thought
 Use of supporting material
 ##
-Which of the following are types of CMC?
-Video
-Instant Messengers Answer
-Phone
-BlueJ
-##
-Which of the following are types of CMC?
-Video
-Instant Messengers Answer
-Phone
-BlueJ
-##
-Which of the following are types of CMC?
-Video
-Instant Messengers Answer
-Phone
-BlueJ
+What has research found to be true about CMC interactions?
+Impressions formed during CMC interactions are less detailed than those formed during face-to-face interactions
+They help develop physical communities
+Questions in CMC interactions are more superficial in nature than those asked during face-to-face interactions
+Participants ask many more questions during initial interactions than face-to-face participants
+
 

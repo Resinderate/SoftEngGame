@@ -16,5 +16,6 @@ public:
 	static Quiz getQuiz(std::string p_filename, int p_secsToAns);
 	static std::string toString(int p_int);
 	static std::string format(std::string p_input, int p_widthInChars);
+	static std::string removeFormat(std::string p_input);
 };
 #endif

@@ -26,7 +26,7 @@ void QuestionButton::startHover()
 	m_button.setFillColor(m_hoverColor);
 }
 
-void QuestionButton::setText(const std::string &p_text)
+void QuestionButton::setText(std::string p_text)
 {
 	m_text.setString(p_text);
 }

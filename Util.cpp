@@ -82,3 +82,13 @@ std::string Util::format(std::string p_input, int p_widthInChars)
 	}
 	return p_input;
 }
+
+std::string Util::removeFormat(std::string p_input)
+{
+	char dash = '-';
+	char newline = '\n';
+	p_input.erase (std::remove(p_input.begin(), p_input.end(), dash), p_input.end());
+	p_input.erase (std::remove(p_input.begin(), p_input.end(), newline), p_input.end());
+
+	return p_input;
+}

@@ -1,6 +1,5 @@
 #ifndef ANSWERCOMBO_H
 #define ANSWERCOMBO_H
-
 #include <string>
 
 class AnswerCombo

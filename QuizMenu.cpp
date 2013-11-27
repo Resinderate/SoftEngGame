@@ -45,7 +45,10 @@ int QuizMenu::handleEvents()
 	while (m_window->pollEvent(event))
 	{
 		if(event.type == sf::Event::Closed)
+		{
 			m_window->close();
+			m_currentQuestionTimer = -1;
+		}
 
 		if(event.type == sf::Event::MouseMoved)
 		{
@@ -98,7 +101,7 @@ int QuizMenu::handleEvents()
 
 void QuizMenu::render()
 {
-	m_window->clear();
+	m_window->clear(sf::Color::White);
 	m_window->draw(m_logo);
 	m_window->draw(m_selectQuiz);
 	m_window->draw(m_selectTime);
