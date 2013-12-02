@@ -16,9 +16,6 @@
 #include <iostream>
 
 
-//Deep Purple
-//sf::Color(116, 40, 148, 255)
-//sf::Color(181, 103, 214, 255)
 int main()
 {
 	srand(time(0));
@@ -138,11 +135,6 @@ int main()
 				//takes in answers.
 				EndMenu endMenu(&mainWindow.getWindow(), endRetry, endQuit, textures.get(Textures::Timtam), endLogoPos,
 					answers, endAnswers);
-				/*
-				sf::RenderWindow* p_window, Button &p_retryButton, Button &p_quitButton, 
-				const sf::Texture &p_logoTexture, const sf::Vector2f &p_logoPos, std::vector<AnswerCombo>& p_answers,
-				std::vector<QuestionButton>& p_answerComboButtons
-				*/
 				play = endMenu.run();
 			}
 		}

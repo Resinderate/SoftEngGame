@@ -174,10 +174,21 @@ void Game::updateButtons()
 {
 	m_questionButtons[0].setText(Util::format(m_currentQuestion.getQuestion(), GameData::questionBoxCharLim));
 	//randomize this order
-	m_questionButtons[1].setText(Util::format(m_currentQuestion.getAnswer(), GameData::answerBoxCharLim));
-	m_questionButtons[2].setText(Util::format(m_currentQuestion.getWrongAnswers()[0], GameData::answerBoxCharLim));
-	m_questionButtons[3].setText(Util::format(m_currentQuestion.getWrongAnswers()[1], GameData::answerBoxCharLim));
-	m_questionButtons[4].setText(Util::format(m_currentQuestion.getWrongAnswers()[2], GameData::answerBoxCharLim));
+	std::vector<int> indexes;
+	indexes.push_back(1);
+	indexes.push_back(2);
+	indexes.push_back(3);
+	indexes.push_back(4);
+	std::random_shuffle(indexes.begin(), indexes.end());
+
+	m_questionButtons[indexes.back()].setText(Util::format(m_currentQuestion.getAnswer(), GameData::answerBoxCharLim));
+	indexes.pop_back();
+	m_questionButtons[indexes.back()].setText(Util::format(m_currentQuestion.getWrongAnswers()[0], GameData::answerBoxCharLim));
+	indexes.pop_back();
+	m_questionButtons[indexes.back()].setText(Util::format(m_currentQuestion.getWrongAnswers()[1], GameData::answerBoxCharLim));
+	indexes.pop_back();
+	m_questionButtons[indexes.back()].setText(Util::format(m_currentQuestion.getWrongAnswers()[2], GameData::answerBoxCharLim));
+	indexes.pop_back();
 }
 
 void Game::updateQuestionNumberText()
